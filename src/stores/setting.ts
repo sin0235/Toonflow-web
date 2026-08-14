@@ -28,7 +28,7 @@ export default defineStore(
       fontSize: 16,
     });
 
-    const language = ref<string>("zh-CN");
+    const language = ref<string>("vi-VN");
 
     return { showSetting, baseUrl, otherSetting, themeSetting, language, activeMenu, isElectron, canvasWheelEvent, needUpdate };
   },
