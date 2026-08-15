@@ -1614,6 +1614,7 @@
     "download32": "Tải bản 32-bit",
     "download64": "Tải bản 64-bit",
     "shotFilenamePrefix": "cảnh",
+    "defaultReel": "Phần chính",
     "reasonUnknown": "Không rõ nguyên nhân",
     "confirmUpdateBody": "Cập nhật qua {source} lên v{version}. Tiếp tục?{warning}"
   }

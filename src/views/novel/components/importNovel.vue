@@ -57,6 +57,7 @@
                     <span class="ellipsisText">{{ row.chapterData }}</span>
                   </t-tooltip>
                 </template>
+                <template #reel="{ row }">{{ row.reel === "正文卷" ? $t("legacy.defaultReel") : row.reel }}</template>
               </t-table>
               <div class="selectedInfo">{{ $t("workbench.novel.import.selectedInfo", { count: selectedTextLength }) }}</div>
               <div style="margin-top: 16px; text-align: right">

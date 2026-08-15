@@ -1763,6 +1763,7 @@
     "download32": "32-bit download",
     "download64": "64-bit download",
     "shotFilenamePrefix": "shot",
+    "defaultReel": "Main section",
     "reasonUnknown": "Unknown reason",
     "confirmUpdateBody": "Update via {source} to v{version}. Continue?{warning}"
   }

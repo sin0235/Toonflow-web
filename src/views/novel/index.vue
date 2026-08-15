@@ -83,6 +83,7 @@
           </t-link>
         </div>
       </template>
+      <template #reel="{ row }">{{ row.reel === "正文卷" ? $t("legacy.defaultReel") : row.reel }}</template>
       <template #operation="{ row }">
         <t-space :size="0">
           <t-button theme="primary" :disabled="row.eventState == 0" variant="text" @click="handleEdit(row)">
