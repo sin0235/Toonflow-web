@@ -46,7 +46,7 @@
           <t-form-item v-for="input in requiredInputs" :key="input.key" :name="input.key">
             <template #label>
               <span class="requiredLabel">
-                {{ input.label }}
+                {{ getInputLabel(input) }}
                 <span class="requiredMark">*</span>
                 <span class="requiredText">{{ $t("settings.vendor.required") }}</span>
               </span>
@@ -64,7 +64,7 @@
           <div v-if="optionalInputs.length > 0" class="optionalSection">
             <t-collapse>
               <t-collapse-panel value="optional-inputs" :header="$t('settings.vendor.optionalSection')">
-                <t-form-item v-for="input in optionalInputs" :key="input.key" :name="input.key" :label="input.label">
+                <t-form-item v-for="input in optionalInputs" :key="input.key" :name="input.key" :label="getInputLabel(input)">
                   <t-input v-model="currentVendor.inputValues[input.key]" :type="input.type" clearable @blur="onBlurFn">
                     <template #prefix-icon>
                       <t-icon :name="getInputIcon(input.type)" />
@@ -422,12 +422,13 @@ const vendorNameKeys: Record<string, string> = {
 };
 
 function getVendorName(item: VendorItem) {
-  return vendorNameKeys[item.id] ? $t(vendorNameKeys[item.id]) : item.name;
+  if (vendorNameKeys[item.id]) return $t(vendorNameKeys[item.id]);
+  return /[\u3400-\u9fff]/.test(item.name) ? $t("legacy.customVendor") : item.name;
 }
 
 function getVendorDescription(item: VendorItem | undefined) {
   if (!item) return "";
-  return vendorNameKeys[item.id] ? `${getVendorName(item)}\n\n${$t("settings.vendor.modelSettings")}` : item.description || "";
+  return `${getVendorName(item)}\n\n${$t("settings.vendor.modelSettings")}`;
 }
 
 function getModelName(item: VendorModel) {
@@ -573,7 +574,22 @@ function getInputIcon(type: VendorInput["type"]) {
 }
 
 function getInputPlaceholder(input: VendorInput) {
-  return input.placeholder?.trim() || "";
+  const key = input.key.toLowerCase();
+  if (key.includes("apikey") || key === "token") return $t("legacy.vendorInputApiKey");
+  if (key.includes("baseurl") || key.includes("chatbaseurl")) return $t("legacy.vendorInputBaseUrl");
+  if (key.includes("mediaurl")) return $t("legacy.vendorInputMediaBaseUrl");
+  const placeholder = input.placeholder?.trim() || "";
+  return /[\u3400-\u9fff]/.test(placeholder) ? $t("legacy.vendorInputGeneric") : placeholder;
+}
+
+function getInputLabel(input: VendorInput) {
+  const key = input.key.toLowerCase();
+  if (key.includes("apikey") || key === "token") return $t("legacy.vendorInputApiKeyLabel");
+  if (key.includes("baseurl") || key.includes("chatbaseurl")) return $t("legacy.vendorInputBaseUrlLabel");
+  if (key.includes("mediaurl")) return $t("legacy.vendorInputMediaBaseUrlLabel");
+  if (key.includes("accesskey")) return $t("legacy.vendorInputAccessKeyLabel");
+  if (key.includes("secretkey")) return $t("legacy.vendorInputSecretKeyLabel");
+  return /[\u3400-\u9fff]/.test(input.label) ? $t("legacy.vendorInputGenericLabel") : input.label;
 }
 
 /**

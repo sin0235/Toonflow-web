@@ -138,7 +138,7 @@ const customConfig: GlobalConfigProvider = {
   table: {},
   pagination: {},
 };
-const globalConfig = computed<GlobalConfigProvider>(() => merge({}, tdesignLocaleMap[cachedLocale.value] || zhConfig, customConfig));
+const globalConfig = computed<GlobalConfigProvider>(() => merge({}, tdesignLocaleMap[locale.value] || enConfig, customConfig));
 
 onBeforeMount(() => {
   initTheme();

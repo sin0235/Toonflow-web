@@ -5,9 +5,9 @@
         <div class="data">
           <div class="jb">
             <div class="name">{{ getPromptTitle(value) }}</div>
-            <div class="type">{{ value.type }}</div>
+            <div class="type">{{ getPromptType(value) }}</div>
           </div>
-          <div class="data">{{ value.data }}</div>
+          <div class="data">{{ getPromptSummary(value) }}</div>
         </div>
       </t-card>
     </div>
@@ -56,9 +56,27 @@ const promptTitleKeys: Record<string, string> = {
   videoPromptGeneration: "legacy.promptVideoGeneration",
   audioBindPrompt: "legacy.promptAudioBinding",
 };
+const promptTypeKeys: Record<string, string> = {
+  eventExtraction: "legacy.promptEventExtraction",
+  scriptAssetExtraction: "legacy.promptScriptAssetExtraction",
+  videoPromptGeneration: "legacy.promptVideoGeneration",
+  audioBindPrompt: "legacy.promptAudioBinding",
+};
+const promptSummaryKeys: Record<string, string> = {
+  eventExtraction: "legacy.promptEventSummary",
+  scriptAssetExtraction: "legacy.promptScriptAssetSummary",
+  videoPromptGeneration: "legacy.promptVideoSummary",
+  audioBindPrompt: "legacy.promptAudioSummary",
+};
 
 function getPromptTitle(value: { name: string; type: string }) {
   return promptTitleKeys[value.type] ? $t(promptTitleKeys[value.type]) : value.name;
+}
+function getPromptType(value: { type: string }) {
+  return promptTypeKeys[value.type] ? $t(promptTypeKeys[value.type]) : value.type;
+}
+function getPromptSummary(value: { type: string }) {
+  return promptSummaryKeys[value.type] ? $t(promptSummaryKeys[value.type]) : $t("legacy.promptCustomSummary");
 }
 function getPrompt() {
   axios.post("/setting/promptManage/getPrompt").then((res) => {
