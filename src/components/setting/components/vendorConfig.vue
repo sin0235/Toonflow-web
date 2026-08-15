@@ -420,6 +420,22 @@ const vendorNameKeys: Record<string, string> = {
   minimax: "legacy.vendorMinimax",
   bull: "legacy.vendorOpenAICompatible",
 };
+const vendorDescriptionKeys: Record<string, string> = {
+  toonflow: "legacy.vendorToonflowDescription",
+  deepseek: "legacy.vendorDeepSeekDescription",
+  atlascloud: "legacy.vendorAtlasCloudDescription",
+  volcengine: "legacy.vendorVolcengineDescription",
+  minimax: "legacy.vendorMinimaxDescription",
+  bull: "legacy.vendorOpenAICompatibleDescription",
+  openai: "legacy.vendorOpenAICompatibleDescription",
+};
+const vendorInputPlaceholderKeys: Record<string, string> = {
+  "volcengine.apiKey": "legacy.vendorVolcengineApiKey",
+  "volcengine.baseUrl": "legacy.vendorVolcengineBaseUrl",
+  "minimax.baseUrl": "legacy.vendorMinimaxBaseUrl",
+  "deepseek.baseUrl": "legacy.vendorDeepSeekBaseUrl",
+  "atlascloud.apiKey": "legacy.vendorAtlasCloudApiKey",
+};
 
 function getVendorName(item: VendorItem) {
   if (vendorNameKeys[item.id]) return $t(vendorNameKeys[item.id]);
@@ -428,13 +444,20 @@ function getVendorName(item: VendorItem) {
 
 function getVendorDescription(item: VendorItem | undefined) {
   if (!item) return "";
-  return `${getVendorName(item)}\n\n${$t("settings.vendor.modelSettings")}`;
+  return vendorDescriptionKeys[item.id] ? $t(vendorDescriptionKeys[item.id]) : item.description || "";
 }
 
 function getModelName(item: VendorModel) {
   return item.name
     .replace(/\s*[（(]支持真人[）)]/g, ` (${$t("legacy.supportsRealisticPeople")})`)
-    .replace("全能图片G", `${$t("legacy.universalImage")} G`);
+    .replace("全能图片G", `${$t("legacy.universalImage")} G`)
+    .replace("海螺图像", $t("legacy.hailuoImage"))
+    .replace("海螺2.3", "Hailuo 2.3")
+    .replace("海螺02", "Hailuo 02")
+    .replace("极速版", $t("legacy.highSpeedVersion"))
+    .replace("(推理版)", `(${$t("legacy.reasoningVersion")})`)
+    .replace("(编程版)", `(${$t("legacy.codingVersion")})`)
+    .replace("(Agent版)", `(${$t("legacy.agentVersion")})`);
 }
 
 // ── 常量 ──
@@ -577,6 +600,9 @@ function getInputIcon(type: VendorInput["type"]) {
 
 function getInputPlaceholder(input: VendorInput) {
   const key = input.key.toLowerCase();
+  const vendorInputKey = `${currentVendor.value?.id}.${input.key}`;
+  const exactKey = vendorInputPlaceholderKeys[vendorInputKey];
+  if (exactKey) return $t(exactKey);
   if (key.includes("apikey") || key === "token") return $t("legacy.vendorInputApiKey");
   if (key.includes("baseurl") || key.includes("chatbaseurl")) return $t("legacy.vendorInputBaseUrl");
   if (key.includes("mediaurl")) return $t("legacy.vendorInputMediaBaseUrl");
@@ -587,7 +613,9 @@ function getInputPlaceholder(input: VendorInput) {
 function getInputLabel(input: VendorInput) {
   const key = input.key.toLowerCase();
   if (key.includes("apikey") || key === "token") return $t("legacy.vendorInputApiKeyLabel");
-  if (key.includes("baseurl") || key.includes("chatbaseurl")) return $t("legacy.vendorInputBaseUrlLabel");
+  if (key === "chatbaseurl") return $t("legacy.vendorInputChatBaseUrlLabel");
+  if (key === "mediabaseurl") return $t("legacy.vendorInputMediaBaseUrlLabel");
+  if (key.includes("baseurl")) return $t("legacy.vendorInputRequestUrlLabel");
   if (key.includes("mediaurl")) return $t("legacy.vendorInputMediaBaseUrlLabel");
   if (key.includes("accesskey")) return $t("legacy.vendorInputAccessKeyLabel");
   if (key.includes("secretkey")) return $t("legacy.vendorInputSecretKeyLabel");
