@@ -1751,6 +1751,7 @@
     "vendorInputMediaBaseUrl": "Enter the media service base URL",
     "vendorInputGeneric": "Enter a value",
     "supportsRealisticPeople": "supports realistic people",
+    "universalImage": "Universal Image",
     "segments": "segments",
     "prefix": "Prefix",
     "roleDerivative": "Character derivative",

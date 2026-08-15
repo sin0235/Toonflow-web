@@ -432,7 +432,9 @@ function getVendorDescription(item: VendorItem | undefined) {
 }
 
 function getModelName(item: VendorModel) {
-  return item.name.replace("（支持真人）", ` (${$t("legacy.supportsRealisticPeople")})`);
+  return item.name
+    .replace(/\s*[（(]支持真人[）)]/g, ` (${$t("legacy.supportsRealisticPeople")})`)
+    .replace("全能图片", $t("legacy.universalImage"));
 }
 
 // ── 常量 ──
