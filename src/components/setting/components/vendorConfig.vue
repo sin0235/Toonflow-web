@@ -434,7 +434,7 @@ function getVendorDescription(item: VendorItem | undefined) {
 function getModelName(item: VendorModel) {
   return item.name
     .replace(/\s*[（(]支持真人[）)]/g, ` (${$t("legacy.supportsRealisticPeople")})`)
-    .replace("全能图片", $t("legacy.universalImage"));
+    .replace("全能图片G", `${$t("legacy.universalImage")} G`);
 }
 
 // ── 常量 ──
