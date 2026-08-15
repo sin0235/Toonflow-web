@@ -45,8 +45,10 @@
   "settings": {
     "title": "ToonFlow Settings",
     "menu": {
+      "ui": "Interface",
       "language": "Language",
       "vendorConfig": "Model Providers",
+      "modelMap": "Model Map",
       "agentConfig": "Agent Config",
       "promptManage": "Prompt Management",
       "skillManagement": "skillsSkillsManagement",
@@ -56,9 +58,10 @@
       "fileManagement": "File Management",
       "otherConfig": "Other Config",
       "requestConfig": "Request URL",
+      "devConfig": "Developer Config",
       "about": "Check for Updates",
       "logoutConfig": "Logout",
-      "skillsSkillsManagement": "SkillsSkills Management"
+      "skillsSkillsManagement": "Skills Management"
     },
     "language": {
       "desc": "Select the interface display language",
@@ -205,7 +208,26 @@
         "getAgentListFailed": "Failed to fetch Agent config list: ",
         "toonflowNotFound": "Toonflow official transfer station does not exist"
       },
-      "temperature": "temperature"
+      "temperature": "temperature",
+      "catalog": {
+        "scriptAgent": { "name": "Script Agent", "desc": "Reads source text to generate story structure and adaptation plans." },
+        "productionAgent": { "name": "Production Agent", "desc": "Orchestrates and manages the production workflow." },
+        "universalAi": { "name": "General AI", "desc": "Handles event extraction, asset prompts, and dialogue extraction." },
+        "ttsDubbing": { "name": "TTS Dubbing", "desc": "Generates character voice acting from the script." },
+        "scriptAgent:decisionAgent": { "name": "Script Agent: Decision Layer", "desc": "Decision layer" },
+        "scriptAgent:supervisionAgent": { "name": "Script Agent: Supervision Layer", "desc": "Supervision layer" },
+        "scriptAgent:storySkeletonAgent": { "name": "Script Agent: Story Structure", "desc": "Generates the story structure" },
+        "scriptAgent:adaptationStrategyAgent": { "name": "Script Agent: Adaptation Strategy", "desc": "Generates the adaptation strategy" },
+        "scriptAgent:scriptAgent": { "name": "Script Agent: Script Generation", "desc": "Generates the script" },
+        "productionAgent:decisionAgent": { "name": "Production Agent: Decision Layer", "desc": "Decision layer" },
+        "productionAgent:supervisionAgent": { "name": "Production Agent: Supervision Layer", "desc": "Supervision layer" },
+        "productionAgent:deriveAssetsAgent": { "name": "Production Agent: Derived Assets", "desc": "Derived assets" },
+        "productionAgent:generateAssetsAgent": { "name": "Production Agent: Asset Generation", "desc": "Generates assets" },
+        "productionAgent:directorPlanAgent": { "name": "Production Agent: Director Planning", "desc": "Director planning" },
+        "productionAgent:storyboardGenAgent": { "name": "Production Agent: Storyboard Generation", "desc": "Generates storyboards" },
+        "productionAgent:storyboardPanelAgent": { "name": "Production Agent: Storyboard Panel", "desc": "Generates storyboard panels" },
+        "productionAgent:storyboardTableAgent": { "name": "Production Agent: Storyboard Table", "desc": "Generates storyboard tables" }
+      }
     },
     "memory": {
       "warning": "The following settings are preset to recommended values. Unless you fully understand their implications, we recommend keeping the current settings.",
@@ -1591,6 +1613,7 @@
     "skillManagement": {
       "search": "Search file name",
       "empty": "No matching files",
+      "emptyTitle": "No data",
       "edit": "edit",
       "selectOnTheLeft": "Please select a file from the left"
     }
@@ -1700,6 +1723,18 @@
     "videoNamingHint": "Name video assets by storyboard group and number",
     "fetchTaskCategoriesFailed": "Failed to fetch task categories",
     "vectorModelPath": "Vector model path:",
+    "noData": "No data",
+    "promptEventExtraction": "Event Extraction",
+    "promptScriptAssetExtraction": "Script Asset Extraction",
+    "promptVideoGeneration": "Video Prompt Generation",
+    "promptAudioBinding": "Audio Binding",
+    "vendorToonflow": "ToonFlow Official Relay",
+    "vendorDeepSeek": "DeepSeek",
+    "vendorAtlasCloud": "AtlasCloud MASS",
+    "vendorVolcengine": "Volcengine",
+    "vendorMinimax": "MiniMax",
+    "vendorOpenAICompatible": "OpenAI-compatible",
+    "supportsRealisticPeople": "supports realistic people",
     "segments": "segments",
     "prefix": "Prefix",
     "roleDerivative": "Character derivative",

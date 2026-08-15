@@ -44,8 +44,10 @@
   "settings": {
     "title": "Cài đặt ToonFlow",
     "menu": {
+      "ui": "Giao diện",
       "language": "Cài đặt ngôn ngữ",
       "vendorConfig": "Dịch vụ mô hình",
+      "modelMap": "Bản đồ mô hình",
       "agentConfig": "Cấu hình Agent",
       "promptManage": "Quản lý Prompt",
       "skillManagement": "Quản lý kĩ năng",
@@ -55,9 +57,10 @@
       "fileManagement": "Quản lý tệp",
       "otherConfig": "Cấu hình khác",
       "requestConfig": "Địa chỉ yêu cầu (API)",
+      "devConfig": "Cấu hình nhà phát triển",
       "about": "Kiểm tra cập nhật",
       "logoutConfig": "Đăng xuất",
-      "skillsSkillsManagement": "Kỹ năngQuản lý kỹ năng"
+      "skillsSkillsManagement": "Quản lý kỹ năng"
     },
     "language": {
       "desc": "Chọn ngôn ngữ hiển thị giao diện",
@@ -203,7 +206,26 @@
         "getAgentListFailed": "Lấy danh sách cấu hình Agent thất bại:",
         "toonflowNotFound": "Trạm trung chuyển chính thức của Toonflow không tồn tại"
       },
-      "temperature": "nhiệt độ"
+      "temperature": "nhiệt độ",
+      "catalog": {
+        "scriptAgent": { "name": "Agent kịch bản", "desc": "Đọc văn bản gốc để tạo cấu trúc truyện và kế hoạch chuyển thể." },
+        "productionAgent": { "name": "Agent sản xuất", "desc": "Điều phối và quản lý quy trình sản xuất." },
+        "universalAi": { "name": "AI đa năng", "desc": "Xử lý trích xuất sự kiện, prompt tài sản và lời thoại." },
+        "ttsDubbing": { "name": "Lồng tiếng TTS", "desc": "Tạo giọng đọc nhân vật từ kịch bản." },
+        "scriptAgent:decisionAgent": { "name": "Agent kịch bản: Tầng quyết định", "desc": "Tầng quyết định" },
+        "scriptAgent:supervisionAgent": { "name": "Agent kịch bản: Tầng giám sát", "desc": "Tầng giám sát" },
+        "scriptAgent:storySkeletonAgent": { "name": "Agent kịch bản: Cấu trúc truyện", "desc": "Tạo cấu trúc truyện" },
+        "scriptAgent:adaptationStrategyAgent": { "name": "Agent kịch bản: Chiến lược chuyển thể", "desc": "Tạo chiến lược chuyển thể" },
+        "scriptAgent:scriptAgent": { "name": "Agent kịch bản: Tạo kịch bản", "desc": "Tạo kịch bản" },
+        "productionAgent:decisionAgent": { "name": "Agent sản xuất: Tầng quyết định", "desc": "Tầng quyết định" },
+        "productionAgent:supervisionAgent": { "name": "Agent sản xuất: Tầng giám sát", "desc": "Tầng giám sát" },
+        "productionAgent:deriveAssetsAgent": { "name": "Agent sản xuất: Tài sản phái sinh", "desc": "Tài sản phái sinh" },
+        "productionAgent:generateAssetsAgent": { "name": "Agent sản xuất: Tạo tài sản", "desc": "Tạo tài sản" },
+        "productionAgent:directorPlanAgent": { "name": "Agent sản xuất: Đạo diễn lập kế hoạch", "desc": "Lập kế hoạch đạo diễn" },
+        "productionAgent:storyboardGenAgent": { "name": "Agent sản xuất: Tạo bảng phân cảnh", "desc": "Tạo bảng phân cảnh" },
+        "productionAgent:storyboardPanelAgent": { "name": "Agent sản xuất: Bảng phân cảnh", "desc": "Tạo các khung phân cảnh" },
+        "productionAgent:storyboardTableAgent": { "name": "Agent sản xuất: Bảng dữ liệu phân cảnh", "desc": "Tạo bảng dữ liệu phân cảnh" }
+      }
     },
     "memory": {
       "warning": "Các mục cấu hình dưới đây đã được đặt sẵn ở mức khuyến nghị. Trừ khi bạn hiểu rõ ý nghĩa và tác động của từng cấu hình, nếu không khuyên bạn nên giữ nguyên thiết lập hiện tại",
@@ -1443,6 +1465,7 @@
     "skillManagement": {
       "search": "Tìm kiếm tên tập tin",
       "empty": "Không có tập tin phù hợp",
+      "emptyTitle": "Chưa có dữ liệu",
       "edit": "biên tập",
       "selectOnTheLeft": "Vui lòng chọn một tập tin từ bên trái"
     }
@@ -1551,6 +1574,18 @@
     "videoNamingHint": "Đặt tên tài nguyên video theo nhóm storyboard và số thứ tự",
     "fetchTaskCategoriesFailed": "Không thể tải danh mục tác vụ",
     "vectorModelPath": "Đường dẫn mô hình vector:",
+    "noData": "Chưa có dữ liệu",
+    "promptEventExtraction": "Trích xuất sự kiện",
+    "promptScriptAssetExtraction": "Trích xuất tài sản kịch bản",
+    "promptVideoGeneration": "Tạo prompt video",
+    "promptAudioBinding": "Liên kết âm thanh",
+    "vendorToonflow": "Trạm trung chuyển chính thức ToonFlow",
+    "vendorDeepSeek": "DeepSeek",
+    "vendorAtlasCloud": "AtlasCloud MASS",
+    "vendorVolcengine": "Volcengine",
+    "vendorMinimax": "MiniMax",
+    "vendorOpenAICompatible": "OpenAI-compatible",
+    "supportsRealisticPeople": "hỗ trợ người thật",
     "segments": "phân đoạn",
     "prefix": "Tiền tố",
     "roleDerivative": "Biến thể nhân vật",

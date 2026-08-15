@@ -14,7 +14,7 @@
             <template #icon v-if="isValidBase64(item.icon)">
               <t-avatar size="24px" shape="round" :image="item.icon" />
             </template>
-            <span>{{ item.name }}</span>
+            <span>{{ getVendorName(item) }}</span>
             <t-switch
               v-model="item.enable"
               :customValue="[1, 0]"
@@ -41,7 +41,7 @@
             :message="$t('settings.vendor.msg.vendorNeedsUpdate')"
             style="margin-bottom: 12px" />
           <t-form-item>
-            <MdPreview v-model="currentVendor.description" :theme="themeSetting.mode" />
+            <MdPreview :model-value="getVendorDescription(currentVendor)" :theme="themeSetting.mode" />
           </t-form-item>
           <t-form-item v-for="input in requiredInputs" :key="input.key" :name="input.key">
             <template #label>
@@ -89,7 +89,7 @@
             <div class="topInfo jb ac">
               <div class="modelCardNameWrap">
                 <t-avatar v-if="getModelLogo(item.modelName)" size="24px" shape="round" :image="getModelLogo(item.modelName)!" />
-                <span class="modelCardName">{{ item.name }}</span>
+                <span class="modelCardName">{{ getModelName(item) }}</span>
               </div>
               <div class="actionBtns">
                 <t-button size="small" variant="text" @click="handleTestModel(item)">
@@ -410,6 +410,28 @@ interface VendorItem {
   models?: VendorModel[];
   enable: number; //1启用 0禁用
   version?: string;
+}
+
+const vendorNameKeys: Record<string, string> = {
+  toonflow: "legacy.vendorToonflow",
+  deepseek: "legacy.vendorDeepSeek",
+  atlascloud: "legacy.vendorAtlasCloud",
+  volcengine: "legacy.vendorVolcengine",
+  minimax: "legacy.vendorMinimax",
+  bull: "legacy.vendorOpenAICompatible",
+};
+
+function getVendorName(item: VendorItem) {
+  return vendorNameKeys[item.id] ? $t(vendorNameKeys[item.id]) : item.name;
+}
+
+function getVendorDescription(item: VendorItem | undefined) {
+  if (!item) return "";
+  return vendorNameKeys[item.id] ? `${getVendorName(item)}\n\n${$t("settings.vendor.modelSettings")}` : item.description || "";
+}
+
+function getModelName(item: VendorModel) {
+  return item.name.replace("（支持真人）", ` (${$t("legacy.supportsRealisticPeople")})`);
 }
 
 // ── 常量 ──

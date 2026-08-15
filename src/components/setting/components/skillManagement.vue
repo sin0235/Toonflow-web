@@ -10,7 +10,7 @@
             <i-file-text v-else theme="outline" size="16" />
           </template>
         </t-tree>
-        <t-empty v-else :description="$t('setting.skillManagement.empty')" />
+        <t-empty v-else :title="$t('setting.skillManagement.emptyTitle')" :description="$t('setting.skillManagement.empty')" />
       </div>
     </aside>
 
@@ -24,7 +24,7 @@
         <MdPreview :theme="themeSetting.mode" :modelValue="content" :toolbars="[]" preview-only preview-theme="github" code-theme="atom" />
       </div>
 
-      <t-empty v-else :description="$t('setting.skillManagement.selectOnTheLeft')" />
+      <t-empty v-else :title="$t('setting.skillManagement.emptyTitle')" :description="$t('setting.skillManagement.selectOnTheLeft')" />
     </section>
 
     <t-dialog

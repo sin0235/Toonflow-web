@@ -4,7 +4,7 @@
       <t-card bordered>
         <div class="data">
           <div class="jb">
-            <div class="name">{{ value.name }}</div>
+            <div class="name">{{ getPromptTitle(value) }}</div>
             <div class="type">{{ value.type }}</div>
           </div>
           <div class="data">{{ value.data }}</div>
@@ -50,6 +50,16 @@ const promptToolbars: ToolbarNames[] = [
 ];
 const visible = ref(false);
 const data = ref<{ id: number; name: string; type: string; data: string }[]>([]);
+const promptTitleKeys: Record<string, string> = {
+  eventExtraction: "legacy.promptEventExtraction",
+  scriptAssetExtraction: "legacy.promptScriptAssetExtraction",
+  videoPromptGeneration: "legacy.promptVideoGeneration",
+  audioBindPrompt: "legacy.promptAudioBinding",
+};
+
+function getPromptTitle(value: { name: string; type: string }) {
+  return promptTitleKeys[value.type] ? $t(promptTitleKeys[value.type]) : value.name;
+}
 function getPrompt() {
   axios.post("/setting/promptManage/getPrompt").then((res) => {
     data.value = res.data.map((item: { id: number; name: string; type: string; data: string }) => {

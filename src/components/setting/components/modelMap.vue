@@ -2,7 +2,7 @@
   <div class="modelMap">
     <t-collapse v-for="(item, index) in modelMap" :key="index" style="margin-top: 5px">
       <t-collapse-panel :header="item.name">
-        <t-table row-key="key" :data="item.promptList" :columns="columns">
+        <t-table row-key="key" :data="item.promptList" :columns="columns" :empty="$t('legacy.noData')">
           <template #type="{ row: subRow }">
             <div class="type">
               <span>{{ subRow.type == "text" ? $t("legacy.typeText") : subRow.type == "video" ? $t("legacy.typeVideo") : $t("legacy.typeImage") }}</span>
@@ -48,7 +48,7 @@
             {{ $t("settings.memory.modelMap.addPrompt") }}
           </t-button>
         </div>
-        <t-table row-key="name" :data="promptList" :columns="promptColumns" :hover="true" max-height="50vh" style="margin-top: 12px">
+        <t-table row-key="name" :data="promptList" :columns="promptColumns" :empty="$t('legacy.noData')" :hover="true" max-height="50vh" style="margin-top: 12px">
           <template #name="{ row }">
             <div style="display: flex; align-items: center; gap: 6px">
               <span>{{ row.name }}</span>

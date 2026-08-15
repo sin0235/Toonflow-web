@@ -31,9 +31,9 @@
           <div class="headerLeft">
             <t-avatar v-if="getDisplayLogo(item)" :image="getDisplayLogo(item)!" shape="round" />
             <t-avatar v-else shape="round" class="fallbackAvatar">
-              {{ getFallbackText(item.name) }}
+              {{ getFallbackText(getAgentName(item)) }}
             </t-avatar>
-            <span class="skillName">{{ item.name }}</span>
+            <span class="skillName">{{ getAgentName(item) }}</span>
           </div>
           <t-tag v-if="item.model && !item.disabled" theme="primary" variant="light" size="small">{{ item.model }}</t-tag>
           <t-tag v-else-if="item.disabled" variant="light" size="small">{{ $t("settings.agent.notOpen") }}</t-tag>
@@ -41,7 +41,7 @@
             {{ $t("settings.agent.notConfigured") }}
           </t-tag>
         </div>
-        <div class="skillCardBody">{{ item.desc }}</div>
+        <div class="skillCardBody">{{ getAgentDesc(item) }}</div>
       </t-card>
     </div>
 
@@ -51,10 +51,10 @@
           <div class="headerLeft">
             <t-avatar v-if="getDisplayLogo(item)" :image="getDisplayLogo(item)!" shape="round" />
             <t-avatar v-else shape="round" class="fallbackAvatar">
-              {{ getFallbackText(item.name) }}
+              {{ getFallbackText(getAgentName(item)) }}
             </t-avatar>
             <div>
-              <div class="skillName">{{ item.name }}</div>
+              <div class="skillName">{{ getAgentName(item) }}</div>
             </div>
           </div>
           <t-tag v-if="item.model && !item.disabled" theme="primary" variant="light" size="small">{{ item.model }}</t-tag>
@@ -64,7 +64,7 @@
           </t-tag>
         </div>
         <div class="skillCardBody jb">
-          <div>{{ item.desc }}</div>
+          <div>{{ getAgentDesc(item) }}</div>
           <div>
             <t-tag theme="primary" variant="light" size="small" style="margin-left: 5px">
               {{ $t("settings.agent.temperature") }}：{{ item.temperature }}
@@ -80,7 +80,7 @@
     <!-- 模型配置弹窗 -->
     <t-dialog
       v-model:visible="modelDataShow"
-      :header="currentItem?.name + ' ' + $t('settings.agent.modelConfig')"
+      :header="getAgentName(currentItem) + ' ' + $t('settings.agent.modelConfig')"
       width="480px"
       :on-confirm="confirmConfig"
       :confirm-btn="$t('settings.agent.confirm')"
@@ -125,7 +125,7 @@
           <t-form-item :label="$t('legacy.selectAgent')">
             <t-select multiple v-model="batchSelectedRaw" @change="onBatchAgentsChange" :placeholder="$t('legacy.pleaseSelect')">
               <t-option :value="'全部'">{{ $t("workbench.task.stateAll") }}</t-option>
-              <t-option v-for="item in advancedModelData" :key="item.id" :value="item.id" :label="item.name">{{ item.name }}</t-option>
+              <t-option v-for="item in advancedModelData" :key="item.id" :value="item.id" :label="getAgentName(item)">{{ getAgentName(item) }}</t-option>
             </t-select>
           </t-form-item>
           <t-form-item :label="$t('settings.agent.selectModel')">
@@ -157,10 +157,12 @@
 
 <script setup lang="ts">
 import modelSelect from "@/components/modelSelect.vue";
+import { useI18n } from "vue-i18n";
 import { providersLogo, modelProviderRules } from "@/utils/providersLogo";
 import axios from "@/utils/axios";
 import settingStore from "@/stores/setting";
 const { isElectron } = storeToRefs(settingStore());
+const { te } = useI18n();
 
 interface ModelType {
   id: number;
@@ -168,6 +170,7 @@ interface ModelType {
   modelName: string;
   vendorId: number | null;
   name: string;
+  key: string;
   icon: string;
   desc: string;
   disabled?: boolean;
@@ -176,6 +179,17 @@ interface ModelType {
 }
 
 const modelData = ref<ModelType[]>([]);
+
+function getAgentName(item: ModelType | null) {
+  if (!item) return "";
+  const key = `settings.agent.catalog.${item.key}.name`;
+  return item.key && te(key) ? $t(key) : item.name;
+}
+
+function getAgentDesc(item: ModelType) {
+  const key = `settings.agent.catalog.${item.key}.desc`;
+  return item.key && te(key) ? $t(key) : item.desc;
+}
 
 const modelDataShow = ref(false);
 const currentItem = ref<ModelType | null>(null);
