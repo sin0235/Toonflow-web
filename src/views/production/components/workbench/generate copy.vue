@@ -115,7 +115,7 @@
                     </div>
                   </template>
                   <template v-else-if="item.id">
-                    <span style="font-size: 20px">文</span>
+          <span style="font-size: 20px">T</span>
                   </template>
                   <div class="clearBtn" @click.stop="clearUpload(index)">
                     <i-close size="12" />
@@ -137,7 +137,7 @@
                     <img :src="item.src" class="uploadPreview" />
                   </template>
                   <template v-else-if="item.id">
-                    <span style="font-size: 20px">文</span>
+          <span style="font-size: 20px">T</span>
                   </template>
                   <template v-else>
                     <i-plus size="24"></i-plus>
@@ -240,7 +240,7 @@
               @click.stop
               @change="(val: boolean) => toggleCheck(track.id, val)" />
             <t-tag class="indexTag" size="small">#{{ index + 1 }}</t-tag>
-            <t-tag class="selectTag" theme="success" size="small" v-if="track.selectVideoId">已选择</t-tag>
+          <t-tag class="selectTag" theme="success" size="small" v-if="track.selectVideoId">{{ $t("legacy.selected") }}</t-tag>
             <div class="thumbGroup" v-if="track.medias.some((m) => m.src)">
               <template v-for="(m, i) in track.medias" :key="i">
                 <template v-if="m.src">
@@ -636,20 +636,20 @@ const mixedClipMediaTypes = computed<ClipMediaType[]>(() => {
 /** 当前模型所有可选模式列表（用于下拉选择） */
 const modeList = computed(() => {
   const modeLabelMap: Record<string, string> = {
-    singleImage: "单图",
-    startEndRequired: "首尾帧",
-    endFrameOptional: "尾帧可选",
-    startFrameOptional: "首帧可选",
-    text: "文本生视频",
-    videoReference: "视频",
-    imageReference: "图片",
-    audioReference: "音频",
-    textReference: "文本",
+    singleImage: $t("workbench.production.generate.modeSingleImage"),
+    startEndRequired: $t("workbench.production.generate.modeStartEnd"),
+    endFrameOptional: $t("workbench.production.generate.endFrameOptional"),
+    startFrameOptional: $t("workbench.production.generate.startFrameOptional"),
+    text: $t("workbench.production.generate.modeText"),
+    videoReference: $t("workbench.production.generate.modeVideoRef"),
+    imageReference: $t("workbench.production.generate.modeImageRef"),
+    audioReference: $t("workbench.production.generate.modeAudioRef"),
+    textReference: $t("workbench.production.generate.modeTextRef"),
   };
   return modeOptions.value.mode
     ? modeOptions.value.mode.map((mode) =>
         Array.isArray(mode)
-          ? { value: JSON.stringify(mode), label: mode.map((m) => modeLabelMap[m] || m).join(" + ") + "参考" }
+          ? { value: JSON.stringify(mode), label: mode.map((m) => modeLabelMap[m] || m).join(" + ") + $t("legacy.reference") }
           : { value: mode, label: modeLabelMap[mode] || mode },
       )
     : [];
@@ -710,24 +710,24 @@ function buildUploadBox(value: string): UploadItemSlot[] {
   if (!currentMode) return [];
 
   const referenceUploadMap: Record<Exclude<ReferenceType, "textReference">, UploadItemSlot> = {
-    videoReference: { fileType: "video", type: "videoReference", label: "参考视频" },
-    imageReference: { fileType: "image", type: "imageReference", label: "参考图片" },
-    audioReference: { fileType: "audio", type: "audioReference", label: "参考音频" },
+    videoReference: { fileType: "video", type: "videoReference", label: $t("workbench.production.generate.refVideo") },
+    imageReference: { fileType: "image", type: "imageReference", label: $t("workbench.generate.referenceImage") },
+    audioReference: { fileType: "audio", type: "audioReference", label: $t("workbench.production.generate.refAudio") },
   };
 
   const modeUploadMap: Record<Exclude<VideoMode, ReferenceType[]>, UploadItemSlot[]> = {
-    singleImage: [{ fileType: "image", type: "imageReference", label: "参考图片" }],
+    singleImage: [{ fileType: "image", type: "imageReference", label: $t("workbench.generate.referenceImage") }],
     startEndRequired: [
-      { fileType: "image", type: "startImage", label: "首帧" },
-      { fileType: "image", type: "endImage", label: "末帧" },
+      { fileType: "image", type: "startImage", label: $t("workbench.production.generate.startFrame") },
+      { fileType: "image", type: "endImage", label: $t("workbench.production.generate.endFrame") },
     ],
     endFrameOptional: [
-      { fileType: "image", type: "startImage", label: "首帧" },
-      { fileType: "image", type: "endImage", label: "末帧(可选)" },
+      { fileType: "image", type: "startImage", label: $t("workbench.production.generate.startFrame") },
+      { fileType: "image", type: "endImage", label: $t("workbench.production.generate.endFrameOptional") },
     ],
     startFrameOptional: [
-      { fileType: "image", type: "startImage", label: "首帧(可选)" },
-      { fileType: "image", type: "endImage", label: "末帧" },
+      { fileType: "image", type: "startImage", label: $t("workbench.production.generate.startFrameOptional") },
+      { fileType: "image", type: "endImage", label: $t("workbench.production.generate.endFrame") },
     ],
     text: [],
   };
@@ -1101,7 +1101,7 @@ async function genText() {
     const targetTrack = trackList.value.find((item) => item.id === trackId);
     if (targetTrack) targetTrack.prompt = data;
   } catch (e) {
-    window.$message.error((e as Error)?.message ?? "提示词生成失败");
+    window.$message.error((e as Error)?.message ?? $t("legacy.promptGenerationFailed"));
   } finally {
     genTextLoadingMap.value[trackId] = false;
   }
@@ -1340,7 +1340,7 @@ async function downloadVideo(value: HistoryVideoItem) {
   const blob = await response.blob();
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = "视频.mp4";
+  link.download = $t("legacy.videoFilename");
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -1405,7 +1405,7 @@ async function batchDownloadVideo(): Promise<void> {
     .map((track) => {
       const video = track.videoList.find((v) => v.id === track.selectVideoId);
       if (!video?.src) return null;
-      const filename = `分镜${track.id}.${getFileExtension(video.src)}`;
+      const filename = `${$t("legacy.shotFilenamePrefix")}${track.id}.${getFileExtension(video.src)}`;
       return fetch(video.src)
         .then((res) => res.blob())
         .then((blob) => zip.file(filename, blob))
@@ -1417,7 +1417,7 @@ async function batchDownloadVideo(): Promise<void> {
   const url = URL.createObjectURL(zipBlob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `视频批量下载_${Date.now()}.zip`;
+  a.download = `${$t("legacy.videoBatchFilename")}_${Date.now()}.zip`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);

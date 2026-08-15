@@ -30,17 +30,17 @@ instance.interceptors.response.use(
     }
     if (error.message.includes("Network Error") || error.response.data?.message === "Network Error") {
       NotifyPlugin.error({
-        title: "Network Error",
+        title: window.$t("legacy.networkErrorTitle"),
         closeBtn: true,
         duration: 3000, // 不自动关闭，让用户有时间看
         className: "customNotifyFull", // 自定义类名
         content: () =>
           h("div", [
-            h("div", { style: { marginBottom: "8px" } }, "网络连接失败，请依次尝试："),
-            h("div", { style: { marginBottom: "4px" } }, "1. 右键程序图标 → 以管理员身份运行"),
-            h("div", { style: { marginBottom: "4px" } }, "2. 检查后端服务是否已正常启动"),
+            h("div", { style: { marginBottom: "8px" } }, window.$t("legacy.networkAdvice")),
+            h("div", { style: { marginBottom: "4px" } }, window.$t("legacy.networkAdmin")),
+            h("div", { style: { marginBottom: "4px" } }, window.$t("legacy.networkBackend")),
             h("div", [
-              "3. 安装 Visual C++ 运行库：",
+              window.$t("legacy.networkRuntime"),
               h("div", { style: { display: "flex", gap: "8px", marginTop: "4px" } }, [
                 h(
                   "a",
@@ -50,7 +50,7 @@ instance.interceptors.response.use(
                     rel: "noopener noreferrer",
                     style: { color: "#0052d9" },
                   },
-                  "32位下载",
+                  window.$t("legacy.download32"),
                 ),
                 h(
                   "a",
@@ -60,7 +60,7 @@ instance.interceptors.response.use(
                     rel: "noopener noreferrer",
                     style: { color: "#0052d9" },
                   },
-                  "64位下载",
+                  window.$t("legacy.download64"),
                 ),
               ]),
             ]),

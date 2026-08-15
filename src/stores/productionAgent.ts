@@ -526,6 +526,6 @@ function createProductionAgentStore(projectId: string) {
 
 export default function useProductionAgentStore() {
   const id = projectStore().project?.id;
-  if (!id) throw new Error("No project selected");
+  if (!id) throw new Error(window.$t("legacy.noProject"));
   return createProductionAgentStore(id)();
 }

@@ -142,7 +142,7 @@ const downloadingSet = new Set<string>();
 async function downloadVideo(value: HistoryVideoItem) {
   if (!value?.src) return;
   if (downloadingSet.has(value.src)) {
-    window.$message.info("下载进行中，请稍候");
+    window.$message.info($t("legacy.videoDownloadPending"));
     return;
   }
   downloadingSet.add(value.src);
@@ -166,7 +166,7 @@ async function downloadVideo(value: HistoryVideoItem) {
     }, 60000);
   } catch (err) {
     console.error(err);
-    window.$message.error("下载失败");
+    window.$message.error($t("components.imageTools.msg.downloadFailed"));
   } finally {
     downloadingSet.delete(value.src);
   }

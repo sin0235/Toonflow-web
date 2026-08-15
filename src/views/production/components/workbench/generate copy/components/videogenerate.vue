@@ -278,20 +278,20 @@ function handleResolutionChange(res: string) {
 /** 当前模型所有可选模式列表（用于下拉选择） */
 const modeList = computed(() => {
   const modeLabelMap: Record<string, string> = {
-    singleImage: "单图",
-    startEndRequired: "首尾帧",
-    endFrameOptional: "尾帧可选",
-    startFrameOptional: "首帧可选",
-    text: "文本生视频",
-    videoReference: "视频",
-    imageReference: "图片",
-    audioReference: "音频",
-    textReference: "文本",
+    singleImage: $t("workbench.production.generate.modeSingleImage"),
+    startEndRequired: $t("workbench.production.generate.modeStartEnd"),
+    endFrameOptional: $t("workbench.production.generate.endFrameOptional"),
+    startFrameOptional: $t("workbench.production.generate.startFrameOptional"),
+    text: $t("workbench.production.generate.modeText"),
+    videoReference: $t("workbench.production.generate.modeVideoRef"),
+    imageReference: $t("workbench.production.generate.modeImageRef"),
+    audioReference: $t("workbench.production.generate.modeAudioRef"),
+    textReference: $t("workbench.production.generate.modeTextRef"),
   };
   return modeOptions.value.mode
     ? modeOptions.value.mode.map((mode: any) =>
         Array.isArray(mode)
-          ? { value: JSON.stringify(mode), label: mode.map((m) => modeLabelMap[m] || m).join(" + ") + "参考" }
+          ? { value: JSON.stringify(mode), label: mode.map((m) => modeLabelMap[m] || m).join(" + ") + $t("legacy.reference") }
           : { value: mode, label: modeLabelMap[mode] || mode },
       )
     : [];

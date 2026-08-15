@@ -1,14 +1,14 @@
 <template>
   <div class="uiConfig">
     <t-form labelAlign="top">
-      <t-form-item label="颜色模式">
+      <t-form-item :label="$t('legacy.themeMode')">
         <t-radio-group variant="default-filled" v-model="themeSetting.mode">
-          <t-radio-button value="auto">自动</t-radio-button>
-          <t-radio-button value="light">浅色</t-radio-button>
-          <t-radio-button value="dark">深色</t-radio-button>
+          <t-radio-button value="auto">{{ $t("settings.agent.auto") }}</t-radio-button>
+          <t-radio-button value="light">{{ $t("legacy.light") }}</t-radio-button>
+          <t-radio-button value="dark">{{ $t("legacy.dark") }}</t-radio-button>
         </t-radio-group>
       </t-form-item>
-      <t-form-item label="主题色">
+      <t-form-item :label="$t('legacy.themeColor')">
         <div class="themeColorConfig">
           <button
             v-for="color in presetColors"
@@ -21,15 +21,15 @@
           <t-color-picker v-model="themeSetting.primaryColor" :color-modes="['monochrome']" format="HEX" :enable-alpha="false" />
         </div>
       </t-form-item>
-      <t-form-item label="字体大小">
+      <t-form-item :label="$t('workbench.production.editVideo.fontSize')">
         <t-radio-group variant="default-filled" v-model="themeSetting.fontSize">
-          <t-radio-button :value="12">极小</t-radio-button>
-          <t-radio-button :value="13">较小</t-radio-button>
-          <t-radio-button :value="14">小</t-radio-button>
-          <t-radio-button :value="16">默认</t-radio-button>
-          <t-radio-button :value="18">大</t-radio-button>
-          <t-radio-button :value="20">较大</t-radio-button>
-          <t-radio-button :value="22">极大</t-radio-button>
+          <t-radio-button :value="12">{{ $t("legacy.fontTiny") }}</t-radio-button>
+          <t-radio-button :value="13">{{ $t("legacy.fontSmall") }}</t-radio-button>
+          <t-radio-button :value="14">{{ $t("legacy.fontSmall") }}</t-radio-button>
+          <t-radio-button :value="16">{{ $t("legacy.fontDefault") }}</t-radio-button>
+          <t-radio-button :value="18">{{ $t("legacy.fontLarge") }}</t-radio-button>
+          <t-radio-button :value="20">{{ $t("legacy.fontLarge") }}</t-radio-button>
+          <t-radio-button :value="22">{{ $t("legacy.fontExtraLarge") }}</t-radio-button>
         </t-radio-group>
       </t-form-item>
     </t-form>

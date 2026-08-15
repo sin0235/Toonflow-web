@@ -32,10 +32,10 @@
         <t-table :data="taskList" :columns="columns" row-key="id" :loading="pagination.loading" hover stripe>
           <template #state="{ row }">
             <t-tooltip v-if="row.state === '生成失败'" :content="row.reason || $t('workbench.task.noFailReason')" placement="top">
-              <span class="stateText stateFail">{{ row.state }}</span>
+              <span class="stateText stateFail">{{ row.state === "进行中" ? $t("workbench.task.stateRunning") : row.state === "已完成" ? $t("workbench.task.stateCompleted") : row.state }}</span>
             </t-tooltip>
             <span v-else class="stateText" :class="row.state === '进行中' ? 'stateRunning' : 'stateSuccess'">
-              {{ row.state }}
+              {{ row.state === "进行中" ? $t("workbench.task.stateRunning") : row.state === "已完成" ? $t("workbench.task.stateCompleted") : row.state }}
             </span>
           </template>
           <template #startTime="{ row }">

@@ -22,7 +22,7 @@
         <t-radio value="0">{{ $t("settings.agent.ordinary") }}</t-radio>
         <t-radio value="1">{{ $t("settings.agent.advanced") }}</t-radio>
       </t-radio-group>
-      <t-button v-if="agentUseModeVal == '1'" theme="primary" @click="batchSetting">批量设置</t-button>
+      <t-button v-if="agentUseModeVal == '1'" theme="primary" @click="batchSetting">{{ $t("legacy.batchSetting") }}</t-button>
     </div>
 
     <div v-if="agentUseModeVal === '0'" class="cardGrid">
@@ -114,7 +114,7 @@
     <!-- 批量高级配置弹窗 -->
     <t-dialog
       v-model:visible="batchDialogVisible"
-      header="批量设置（高级）"
+      :header="$t('settings.agent.advanced') + ' - ' + $t('legacy.batchSetting')"
       width="640px"
       :on-confirm="applyBatchSettings"
       :confirm-btn="$t('settings.agent.confirm')"
@@ -122,9 +122,9 @@
       :loading="batchLoading">
       <div class="dialogContent">
         <t-form label-align="top">
-          <t-form-item label="选择agent">
-            <t-select multiple v-model="batchSelectedRaw" @change="onBatchAgentsChange" placeholder="请选择">
-              <t-option :value="'全部'">全部</t-option>
+          <t-form-item :label="$t('legacy.selectAgent')">
+            <t-select multiple v-model="batchSelectedRaw" @change="onBatchAgentsChange" :placeholder="$t('legacy.pleaseSelect')">
+              <t-option :value="'全部'">{{ $t("workbench.task.stateAll") }}</t-option>
               <t-option v-for="item in advancedModelData" :key="item.id" :value="item.id" :label="item.name">{{ item.name }}</t-option>
             </t-select>
           </t-form-item>
@@ -345,7 +345,7 @@ function onBatchAgentsChange(value: any) {
 async function applyBatchSettings() {
   const targetIds = batchApplyToAll.value ? advancedModelData.value.map((m) => m.id) : batchSelectedIds.value;
   if (!targetIds || targetIds.length === 0) {
-    return window.$message.warning("请选择要设置的模型");
+    return window.$message.warning($t("legacy.selectModel"));
   }
   batchLoading.value = true;
   const items = targetIds

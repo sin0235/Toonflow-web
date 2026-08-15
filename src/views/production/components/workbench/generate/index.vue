@@ -146,15 +146,15 @@ function modeChange(newVal: string) {
 }
 const modeList = computed(() => {
   const modeLabelMap: Record<string, string> = {
-    singleImage: "单图",
-    startEndRequired: "首尾帧",
-    endFrameOptional: "尾帧可选",
-    startFrameOptional: "首帧可选",
-    text: "文本生视频",
-    videoReference: "视频",
-    imageReference: "图片",
-    audioReference: "音频",
-    textReference: "文本",
+    singleImage: $t("workbench.production.generate.modeSingleImage"),
+    startEndRequired: $t("workbench.production.generate.modeStartEnd"),
+    endFrameOptional: $t("workbench.production.generate.endFrameOptional"),
+    startFrameOptional: $t("workbench.production.generate.startFrameOptional"),
+    text: $t("workbench.production.generate.modeText"),
+    videoReference: $t("workbench.production.generate.modeVideoRef"),
+    imageReference: $t("workbench.production.generate.modeImageRef"),
+    audioReference: $t("workbench.production.generate.modeAudioRef"),
+    textReference: $t("workbench.production.generate.modeTextRef"),
   };
   function parseRefLabel(m: string): string {
     const match = m.match(/^(videoReference|imageReference|audioReference|textReference):(\d+)$/);
@@ -167,7 +167,7 @@ const modeList = computed(() => {
   return modeOptions.value.mode
     ? modeOptions.value.mode.map((mode) =>
         Array.isArray(mode)
-          ? { value: JSON.stringify(mode), label: mode.map((m) => parseRefLabel(m)).join(" + ") + "参考" }
+          ? { value: JSON.stringify(mode), label: mode.map((m) => parseRefLabel(m)).join(" + ") + $t("legacy.reference") }
           : { value: mode, label: modeLabelMap[mode] || mode },
       )
     : [];
@@ -331,7 +331,7 @@ async function genText() {
     track.state = "已完成";
   } catch (e) {
     track.state = "生成失败";
-    window.$message.error((e as Error)?.message ?? "提示词生成失败");
+    window.$message.error((e as Error)?.message ?? $t("legacy.promptGenerationFailed"));
   }
 }
 function trackChange(prevIndex?: number) {
@@ -426,7 +426,7 @@ async function generateVideo() {
           src: "",
         });
       } catch (e) {
-        window.$message.error((e as any)?.message ?? "视频发起生成请求失败");
+        window.$message.error((e as any)?.message ?? $t("workbench.generate.generateError"));
       } finally {
       }
     },
@@ -504,7 +504,7 @@ async function getTrackPromptList() {
         findData.prompt = item?.prompt ?? "";
         findData.reason = item?.reason ?? "";
         if (item.state === "生成失败") {
-          window.$message.error(`提示词生成失败，${item.reason ?? "未知原因"}`);
+          window.$message.error(`${$t("workbench.assets.gen.promptFail")}，${item.reason ?? $t("legacy.reasonUnknown")}`);
         }
       }
     });

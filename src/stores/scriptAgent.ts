@@ -94,6 +94,6 @@ function createScriptAgentStore(projectId: string) {
 
 export default function useScriptAgentStore() {
   const id = projectStore().project?.id;
-  if (!id) throw new Error("No project selected");
+  if (!id) throw new Error(window.$t("legacy.noProject"));
   return createScriptAgentStore(id)();
 }
